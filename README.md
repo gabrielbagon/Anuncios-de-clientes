@@ -23,6 +23,10 @@
 - Frameworks
   - JQuery
 
+  <p align="center">
+  <img alt="Happy" width="20%" height="20%" src=".github/anuncio.gif" width="100%">
+</p>
+
 
 
 
