@@ -1,0 +1,126 @@
+<header>
+  <div class="container">
+    <h1>Divulga Tudo: Cadastro e Calculadora de Anúncios</h1>
+  </div>
+</header>
+<main class="container">
+
+  <section>
+    <h2>Cadastro de Anúncios e Clientes</h2>
+    <form id="formulario">
+      <fieldset class="campo-anuncio">
+        <label>nome do anúncio</label>
+        <input id="campo-anuncio" type="text" placeholder="digite o nome do anúncio">
+      </fieldset>
+      <fieldset class="campo-cliente">
+        <label>Cliente</label>
+        <input id="campo-cliente" type="text" placeholder="digite o cliente">
+      </fieldset>
+      <fieldset class="campo-dt-inicio">
+        <label>Data de início</label>
+        <input id="campo-dt-inicio" type="text" placeholder="digite a data de início do anúncio">
+      </fieldset>
+      <fieldset class="campo-dt-termino">
+        <label>Data de término</label>
+        <input id="campo-dt-termino" type="text" placeholder="digite a data de término do anúncio">
+      </fieldset>
+      <fieldset class="campo-investimento">
+        <label>Investimento por dia</label>
+        <input id="campo-investimento" type="text" placeholder="digite o investimento por dia" onkeyup="formatarReal(this);">
+      </fieldset>
+      <br>
+      <button type="submit" id="adicionar-contato" class="botao bto-principal" value="Add" onclick="Add()"
+        data-dir="dwn">Adicionar</button>
+    </form>
+  </section>
+
+  <section>
+
+
+    <table id="resultado">
+     <h3>Relatório do cadastro </h3>
+      <thead>
+        <tr>
+          <th>Nome do Anúncio</th>
+          <th>Cliente <br /><input type="text" id="txtCliente" /></th>
+          <th>Data de início <br /><input type="text" id="txtDataInicio" /></th>
+          <th>Data de término <br /><input type="text" id="txtDataFim" /></th>
+          <th>Investimento por dia</th>
+        </tr>
+      </thead>
+      <tbody>
+
+      </tbody>
+    </table>
+   <br>
+   <br>
+   <h3>Cálculo do investimento</h3>
+    Valor R$ <input placeholder="Introduza o investimento" id="n1" onkeyup="formatarReal(this);"/>
+
+    <input type="button" value="INVESTIR" onclick="calc(this)">
+    <br><br>
+
+    <div>
+      Valor total investido:
+      <div id="valorIvestido" />
+    </div>
+    <br>
+
+    <div>
+      Quantidade máxima de visualizações:
+      <div id="respVisualizacaoTotal" />
+    </div>
+    <br>
+
+    <div>
+      Quantidade máxima de compartilhamentos:
+      <div id="respCalculoCompartilhamento" />
+    </div>
+    <br>
+
+
+    <div>
+      Quantidade máxima de cliques:
+      <div id="respCalculoCliques" />
+    </div>
+    <br>
+
+  </section>
+</main>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="anuncio.js"></script>
+
+<!--Filtragem de dados-->
+<script type="text/javascript">
+
+function formatarReal(i) {
+  var v = i.value.replace(/\D/g,'');
+  v = (v/100).toFixed(2) + '';
+  v = v.replace(".", ",");
+  v = v.replace(/(\d)(\d{3})(\d{3}),/g, "$1.$2.$3,");
+  v = v.replace(/(\d)(\d{3}),/g, "$1.$2,");
+  i.value = v;
+}
+
+  $(function () {
+    $("#resultado input").keyup(function () {
+      var index = $(this).parent().index();
+      var nth = "#resultado td:nth-child(" + (index + 1).toString() + ")";
+      var valor = $(this).val().toUpperCase();
+      $("#resultado tbody tr").show();
+      $(nth).each(function () {
+        if ($(this).text().toUpperCase().indexOf(valor) < 0) {
+          $(this).parent().hide();
+        } else {
+          $(this).parent().show();
+        }
+      });
+    });
+
+    $("#resultado input").blur(function () {
+      $(this).val("");
+    });
+  });
+</script>
